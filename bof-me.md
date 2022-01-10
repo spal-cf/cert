@@ -2,9 +2,13 @@
 # Buffer Overflow
 
 Thread Stack Frame Example
+
 Function A Return Address
+
 Function A parameter 1 
+
 Function A parameter 2 
+
 Function A parameter 3 
 
 ## Sample Vulnerable Code
@@ -28,8 +32,11 @@ We right click inside the disassembly window and select Search for > All referen
 strings:
 
 set break point - f2
+
 Run - f9
+
 Step Into - f7
+
 Continue Till Return - Ctrl+f9
 
 ## Fuzzing Script:
@@ -68,9 +75,11 @@ while(size < 2000):
 ```
 kali@kali:~$ locate pattern_create
 /usr/bin/msf-pattern_create /usr/share/metasploit-framework/tools/exploit/pattern_create.rb
+
 kali@kali:~$ msf-pattern_create -h
 Usage: msf-pattern_create [options]
 Example: msf-pattern_create -l 50 -s ABC,def,123 Ad1Ad2Ad3Ae1Ae2Ae3Af1Af2Af3Bd1Bd2Bd3Be1Be2Be3Bf1Bf
+
 Options:
 -l, --length <length> The length of the pattern
 -s, --sets <ABC,def,123> Custom Pattern Sets
