@@ -85,7 +85,8 @@ Options:
 -s, --sets <ABC,def,123> Custom Pattern Sets
 -h, --help Show this message
 
-msf-pattern_offset -l 800 -q 42306142 [*] Exact match at offset 780
+msf-pattern_offset -l 800 -q 42306142 
+[*] Exact match at offset 780
 
 ```
 ### Bad Characters
