@@ -118,4 +118,8 @@ cat access.log | grep '208.68.234.99' | grep '/admin ' | sort -u
 
 cat access.log|grep '208.68.234.99'| grep -v '/admin '
 
+cat /etc/passwd | grep false | awk -F":" '{print "The user",$1,"home directory is",$6}'
+
+sudo awk -F ':' '{if($NF=="/bin/false") {printf "The user %s home directory is %s\n", $1, $(NF-1)}}' /etc/passwd
+
 ```

