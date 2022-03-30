@@ -215,6 +215,19 @@ powercat -c 192.168.175.10 -p 4444
 
 You should be able to see the connection and various commands performed
 
+With ACK and PSH flag both set
+
+sudo tcpdump -A -n 'tcp[13] = 24' -r password_cracking_filtered.pcap
+tcpdump 'tcp[tcpflags] & (tcp-push|tcp-ack) == (tcp-push|tcp-ack)' -r password_cracking_filtered.pcap
+
+sudo tcpdump -nX -r password_cracking_filtered.pcap
+
+Following command was used to get and SYN, ACK and RST packet: 
+tcpdump  -n 'tcp[13]=2 or tcp[13]=4 or tcp[13]=16' -r password_cracking_filtered.pcap
+
+
+
+
 ### Checking for encrypted ncat ssl shell
 1. Same setup as above
 
