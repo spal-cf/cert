@@ -235,6 +235,10 @@ Banner grabbing
 * Nmap scripting engine
 /usr/share/nmap/scripts
 
+#### Nmap script help
+`nmap --script-help dns-zone-transfer`
+`sudo nmap --script vuln 10.11.1.10`
+
 ### SMB Enumeration
 
 Only display results with open SMB ports
@@ -346,6 +350,43 @@ onesixtyone
 `snmpwalk -c public -v1 $IP 1.3.6.1.2.1.25.4.2.1.2`
 * searches for running programs (see community string specified)
 
+#### Enumerating Windows Users
+
+`snmpwalk -c public -v1 10.11.1.14 1.3.6.1.4.1.77.1.2.25`
+
+#### Enumerating Running Windows Processes
+
+`snmpwalk -c public -v1 10.11.1.73 1.3.6.1.2.1.25.4.2.1.2`
+
+#### Enumerating Open TCP Ports
+
+`snmpwalk -c public -v1 10.11.1.14 1.3.6.1.2.1.6.13.1.3`
+
+#### Enumerating Installed Software
+
+`snmpwalk -c public -v1 10.11.1.50 1.3.6.1.2.1.25.6.3.1.2`
+
+
 #### Other snmp tools
 * snmpenum
-* snmpcheck
+* snmp-check
+
+### NFS Enumeration
+
+Scan NFS shares
+
+`nmap -v -p 111 10.11.1.1-254`
+
+`nmap -sV -p 111 --script=rpcinfo 10.11.1.1-254`
+
+```
+kali@kali:~$ mkdir home
+kali@kali:~$ sudo mount -o nolock 10.11.1.72:/home ~/home/
+kali@kali:~$ cd home/ && ls 
+jenny joe45 john marcus ryuu
+
+sudo adduser pwn
+
+sudo sed -i -e 's/1001/1014/g' /etc/passwd
+
+```
