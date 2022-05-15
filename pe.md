@@ -16,6 +16,7 @@ wmic product get name, version, vendor
 wmic qfe get Caption, Description, HotFixID, InstalledOn
 accesschk.exe -uws "Everyone" "C:\Program Files"
 Get-ChildItem "C:\Program Files" - Recurse | Get-ACL | ?{$_.AccessToString -match "Everyone\sAllow\s\sModify"}
+find / -writable -type d 2>/dev/null
 
 ```
 
@@ -37,6 +38,5 @@ iptables-restore
 ls -lah /etc/cron*
 cat /etc/crontab
 dpkg -l
-find / -writable -type d 2>/dev/null
 
 ```
