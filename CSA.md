@@ -3,6 +3,8 @@ sudo wget https://github.com/Valve/fingerprintjs2/archive/master.zip
 sudo unzip master.zip
 sudo mv fingerprintjs2-master/ fp
 
+below version 2.1.4 worked
+
 cd /var/www/html/ && sudo wget https://github.com/fingerprintjs/fingerprintjs/archive/2.1.4.zip && sudo unzip 2.1.4.zip && sudo mv fingerprintjs-2.1.4/ fp/ && cd fp
 
 ```

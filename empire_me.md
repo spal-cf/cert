@@ -143,3 +143,12 @@ launcher.bat
 ```
 
 
+##### Empire Privesc module - uac bypass
+
+https://github.com/EmpireProject/Empire/tree/master/data/module_source/privesc
+
+c:\windows\system32\wscript.exe
+c:\windows\system32\eventvwr.exe
+fodhelper.exe - uac bypacc 
+
+#

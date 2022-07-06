@@ -36,3 +36,6 @@ xfreerdp /u:cfsnspk03 /v:10.129.3.4 /cert-ignore
 ### Enable RDP
 `reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f`
 
+python /usr/share/doc/python3-impacket/examples/psexec.py alice:ThisIsTheUsersPassword01@10.11.1.20
+
+
