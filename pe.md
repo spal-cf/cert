@@ -5,6 +5,7 @@ net user student
 net user
 hostname
 systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
+findstr /si password *.xml *.ini *.txt 
 tasklist /SVC
 ipconfig /all
 route -print
@@ -13,6 +14,7 @@ netsh advfirewall show currentprofile
 netsh advfirewall firewall show rule name=all
 schtasks /query /fo LIST /v
 wmic product get name, version, vendor
+wmic service get name,startname
 wmic qfe get Caption, Description, HotFixID, InstalledOn
 accesschk.exe -uws "Everyone" "C:\Program Files"
 Get-ChildItem "C:\Program Files" -Recurse | Get-ACL | ?{$_.AccessToString -match "Everyone\sAllow\s\sModify"}

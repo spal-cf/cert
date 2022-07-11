@@ -34,11 +34,11 @@ grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' file.txt
 =====================================================
 
 ===Wfuzz Files
-wfuzz -z file,/usr/share/dirb/wordlists/common.txt --hc 404 https://10.11.1.237/FUZZ
-wfuzz -z file,/usr/share/seclists/Discovery/Web-Content/raft-medium-files.txt --hc 404 $URL/FUZZ
+wfuzz -c -z file,/usr/share/dirb/wordlists/common.txt --hc 404 https://10.11.1.237/FUZZ
+wfuzz -c -z file,/usr/share/seclists/Discovery/Web-Content/raft-medium-files.txt --hc 404 $URL/FUZZ
 
 ===Wfuzz directories
-wfuzz -z file,/usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt --hc 404 $URL/FUZZ/
+wfuzz -c -z file,/usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt --hc 404 $URL/FUZZ/
 
 ===Wfuzz with post data
 wfuzz -u http://target-ip/path/index.php?action=authenticate -d 'username=admin&password=FUZZ' -w /usr/share/wordlists/rockyou.txt

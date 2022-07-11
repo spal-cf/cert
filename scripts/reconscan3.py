@@ -58,7 +58,7 @@ def httpsEnum(ip_address, port):
     #HTTPSCANS = "nmap -sV -Pn -vv -p %s --script=http-vhosts,http-userdir-enum,http-apache-negotiation,http-backup-finder,http-config-backup,http-default-accounts,http-email-harvest,http-methods,http-method-tamper,http-passwd,http-robots.txt -oX results/exam/%s_https.nmap %s" % (port, ip_address, ip_address)
     HTTPSCANS = "nmap -sV -Pn -vv -p %s --script=http-vhosts,http-userdir-enum,http-apache-negotiation,http-backup-finder,http-config-backup,http-default-accounts,http-methods,http-method-tamper,http-passwd,http-robots.txt -oX results/exam/%s_https.nmap %s" % (port, ip_address, ip_address)
     results = subprocess.check_output(HTTPSCANS, shell=True)
-    DIRBUST = "./dirbust.py https://%s:%s %s" % (ip_address, port, ip_address) # execute the python script
+    DIRBUST = "/home/kali/repos/cert/scripts/dirbust.py https://%s:%s %s" % (ip_address, port, ip_address) # execute the python script
     subprocess.call(DIRBUST, shell=True)
     #NIKTOSCAN = "nikto -host %s -p %s > %s._nikto" % (ip_address, port, ip_address)
     return
@@ -113,7 +113,7 @@ def nmapScan(ip_address):
    print ("INFO: Running general TCP/UDP nmap scans for " + ip_address)
    serv_dict = {}
    #TCPSCAN = "nmap -vv -Pn -A -sC -sS -T 4 -p- -oN 'results/exam/%s.nmap' -oX 'results/exam/nmap/%s_nmap_scan_import.xml' %s"  % (ip_address, ip_address, ip_address)
-   TCPSCAN = "nmap -vv -Pn -sV -sC -sT -T 4 -p- -oA 'results/exam/%s'  %s"  % (ip_address, ip_address)
+   TCPSCAN = "nmap -vv -Pn -sV -sC  -T 4 -p- -oA 'results/exam/%s'  %s"  % (ip_address, ip_address)
    UDPSCAN = "nmap -vv -Pn -sV -sC -sU -T 4 --top-ports 200 -oN 'results/exam/%sU.nmap' -oX 'results/exam/nmap/%sU_nmap_scan_import.xml' %s" % (ip_address, ip_address, ip_address)
    tcp_nmap_file = 'results/exam/%s.nmap' % (ip_address)
    udp_nmap_file = 'results/exam/%sU.nmap' % (ip_address)

@@ -96,6 +96,8 @@ https://github.com/nidem/kerberoast
 Use the script from repo
 https://github.com/nidem/kerberoast
 
+[script under /usr/share/john/ may work as well] 
+
 
 ```
 john --format=krb5tgs ./crack --wordlist=~/oscp/exer/wordlist.txt
@@ -272,4 +274,8 @@ Synching of domain controllers
 lsadump::dcsync /user:Administrator
 
 ```
+
+
+
+https://www.pentestpartners.com/security-blog/how-to-kerberoast-like-a-boss/
 
