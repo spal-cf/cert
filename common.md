@@ -46,6 +46,9 @@ wfuzz -u http://target-ip/path/index.php?action=authenticate -d 'username=admin&
 ps auxww | grep -i root --color=auto
 
 
+dirb
+============
+dirb http://10.11.1.133/ -X .php,.asp -o dirb-4.txt
 
 
 

