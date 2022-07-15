@@ -140,6 +140,8 @@ extrac32 /Y /C \\webdavserver\share\test.txt C:\folder\test.txt
 ```
 apt-get install python-pyftpdlib
 python -m pyftpdlib -p 21
+python -m pyftpdlib -p 21 -w
+
 ```
 ## create anonymous ftp with write access to your filesystem.
 ```

