@@ -24,7 +24,7 @@ Foreach($obj in $Result)
         Write-Host "Sam Account Name : [+]" $prop.samaccountname 
         Write-Host "Service Principal Name : [+]" $SPN_initial 
 
-        If ($SPN -like "*.com") {
+        If ($SPN_initial -like "*.com") {
             nslookup $SPN
         }
     }  

