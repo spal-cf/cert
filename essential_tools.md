@@ -225,6 +225,13 @@ sudo tcpdump -nX -r password_cracking_filtered.pcap
 Following command was used to get and SYN, ACK and RST packet: 
 tcpdump  -n 'tcp[13]=2 or tcp[13]=4 or tcp[13]=16' -r password_cracking_filtered.pcap
 
+sudo tcpdump -n -r password_cracking_filtered.pcap | awk -F" " '{print $5}' | sort | uniq -c | head
+sudo tcpdump -n src host 172.16.40.10 -r password_cracking_filtered.pcap
+sudo tcpdump -n dst host 172.16.40.10 -r password_cracking_filtered.pcap
+sudo tcpdump -n port 81 -r password_cracking_filtered.pcap
+sudo tcpdump -nX -r password_cracking_filtered.pcap
+
+
 
 
 
