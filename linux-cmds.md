@@ -123,3 +123,6 @@ cat /etc/passwd | grep false | awk -F":" '{print "The user",$1,"home directory i
 sudo awk -F ':' '{if($NF=="/bin/false") {printf "The user %s home directory is %s\n", $1, $(NF-1)}}' /etc/passwd
 
 ```
+
+#### Compile 32bit code
+gcc -Wl,--hash-style=both -m32 -o 9542 9542.c

