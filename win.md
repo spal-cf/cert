@@ -38,6 +38,9 @@ xfreerdp /d:sandbox /u:alex /v:10.5.5.20 +clipboard
 ### Enable RDP
 `reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f`
 
+netsh advfirewall firewall set rule group="remote desktop" new enable=yes
+
+
 python /usr/share/doc/python3-impacket/examples/psexec.py alice:ThisIsTheUsersPassword01@10.11.1.20
 
 ### adding yes answer to plink.exe command
